@@ -1,0 +1,182 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Equations</title>
+	<script type="text/javascript" async
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			TeX: { extensions: ["color.js"], equationNumbers: { autoNumber: "AMS" } },
+			showMathMenu: false
+		});
+	</script>
+	<script
+		src="https://code.jquery.com/jquery-2.2.2.min.js"
+		integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="
+		crossorigin="anonymous"></script>
+	<script
+		src="EquationTree.js"></script>
+
+	<style type="text/css">
+		body, html {
+			margin: 0px;
+			padding: 0px;
+		}
+
+		ul	{
+			list-style-type: none;
+		}
+
+		#setup {
+			display:none;
+		}
+
+		#tools {
+			position: fixed;
+			overflow-y: scroll;
+			padding: 4px;
+			left: 4px;
+			top: 4px;
+			width: 304px;
+			height: calc( 100vh - 18px );
+			border: 1px solid blue;
+		}
+
+		#equations_div {
+			margin: 4px;
+			margin-left: 320px;
+			padding: 4px;
+			border: 1px solid red;
+		}
+
+		#workspace{
+			margin: 4px;
+			margin-left: 320px;
+			padding: 4px;
+			border: 1px solid green;
+		}
+	</style>
+</head>
+<body>
+
+<div id="setup">
+$$\definecolor{freq}{RGB}{45,177,93}$$
+</div>
+
+<div id="tools">
+	<h3>Known Equations/Operations</h3>
+	<ol>
+		<li>$$-6 + -8$$</li>
+		<li>$${-6} + {-8}$$</li>
+		<li>$$-6 -8$$</li>
+		<li>$$-{(6 + -8)}$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+		<li>$$sin^2 + cos^2 = 1$$</li>
+	</ol>
+</div>
+
+<div id="maincontainer">
+	<div id="equations_div">
+	<ul id="equation_list">
+		<li>\begin{equation} A = \color{freq}\pi\color{black} r^2 \end{equation}</li>
+		</li>\begin{equation} A = w \times l \end{equation}</li>
+	</ul>
+
+	<p id="thing">"Thing"</p>
+	<button id="go_button">Go</button>
+	</div>
+
+	<div id="workspace">
+		<p>This is the workspace.</p>
+	</div>
+</div>
+
+<script>
+/**  */
+a = new EquationTree("variable", ["a"]);
+three = new EquationTree("number", [3]);
+b = new EquationTree("variable", ["b"]);
+three_plus_b = new EquationTree("plus", [three, b]);
+the_ln = new EquationTree("ln", [three_plus_b]);
+a_equals_three = new EquationTree("equals", [a, the_ln]);
+
+final_answer = new EquationTree("divided by", [new EquationTree("plus", [the_ln, b]), a]);
+
+console.log(a.toString());
+console.log(a.toLaTeX());
+console.log(a_equals_three.toString());
+console.log(a_equals_three.toLaTeX());
+
+console.log(final_answer.toString());
+console.log(final_answer.toLaTeX());
+
+counter = 0;
+
+function equation_handler(equation_id, expression_id) {
+	console.log("You clicked on Equation " + equation_id + " on expression number " + expression_id);
+}
+
+$(go_button).click(function() {
+	counter++;
+	//$(equation_list).append("<li>\\begin{equation} A = \\href{javascript:equation_handler(" + counter + "," + 0 + ")}{\\color{freq}\\pi\\color{black} r^2} \\end{equation}</li>");
+	$(equation_list).append("<li>\\begin{equation}" + final_answer.toLaTeX() + "\\end{equation}</li>")
+
+	MathJax.Hub.Queue(["Typeset", MathJax.Hub, function(){
+		$("#thing" + counter).click(function(){
+			alert('hi from thing ' + counter);
+		});
+	}]);
+
+});
+</script>
+</body>
+</html>

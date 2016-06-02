@@ -1,0 +1,100 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>EquationTree documentation</title>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+	  tex2jax: {
+	    inlineMath: [['$','$']],
+	    processEscapes: true
+	  }
+	});
+	</script>
+	<script type="text/javascript" async
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	<style type="text/css">
+		body, html {
+			margin: 0px;
+			padding: 0px;
+		}
+
+		dl {
+			padding-left: 30px;
+			padding-right: 30px;
+		}
+
+		dt {
+			border-bottom: 1px solid black;
+		}
+
+		dd {
+			/*border: 1px solid black;*/
+		}
+	</style>
+</head>
+<body>
+<p>
+	<h1>EquationTree</h1>
+	<p>
+		A class that represents a mathematical expression or equation. Currently, it supports the following base values:
+		<ul>
+			<li>Positive Numbers ("number"): <code>ConstNumber(5)</code> &rarr; $5$ Note that the convenience function <code>ConstNumber(arg)</code> will accept a negative number, such that <code>ConstNumber(-5)</code> is equivalent to <code>Negative(ConstNumber(5))</code></li>
+			<li>Variables ("variable"): <code>Variable("x")</code> &rarr; $x$</li>
+		</ul>
+		The following binary operators (for the examples, assume <code>five = ConstNumber(5)</code> and <code>x = Variable("x")</code>):
+		<ul>
+			<li>Equals ("equals"): <code>Equals(x, five)</code> &rarr; $x = 5$</li>
+			<li>Plus ("plus"): <code>Plus(x, five)</code> &rarr; $x + 5$</li>
+			<li>Minus ("minus"): <code>Minus(x, five)</code> &rarr; $x - 5$</li>
+			<li>Plus-or-minus ("plusminus"): <code>PlusMinus(x, five)</code> &rarr; $x \pm 5$</li>
+			<li>Times ("times"): <code>Times(x, five)</code> &rarr; $x \times 5$</li>
+			<li>Divided by ("divided by"): <code>DividedBy(x, five)</code> &rarr; $\frac{x}{5}$</li>
+			<li>Exponent ("exponent"): <code>Exponent(x, five)</code> &rarr; $x^5$</li>
+			<li>Logarithm ("logarithm"): <code>Logarithm(x, five)</code> &rarr; $\log_x(5)$</li>
+		</ul>
+		And the following unary operators (for the examples, assume <code>five = ConstNumber(5)</code>):
+		<ul>
+			<li>Natual Logarithm ("ln"): <code>Ln(five)</code> &rarr; $\ln(5)$</li>
+			<li>Sqrt ("sqrt"): <code>Sqrt(five)</code> &rarr; $\sqrt{5}$</li>
+			<li>Unary Negative ("negative"): <code>Negative(five)</code> &rarr; $-5$</li>
+			<li>Unary Plus-or-minus ("pm"): <code>Pm(five)</code> &rarr; $\pm 5$</li>
+		</ul>
+	</p>
+
+	<h2>Constructor</h2>
+	<dl>
+		<dt><code>EquationTree(nodeType:string, args:array of anything)</code></dt>
+		<dd>Creates an EquationTree of type nodeType, with arguments arg. Throws a TypeError if args don't match the expected values for the given nodeType. In practice, you never need to call this function directly, but instead use the convenience functions like <code>ConstNumber(arg)</code></dd>
+	</dl>
+
+	<h2>Fields</h2>
+	<dl>
+		<dt><code>nodeType</code></dt>
+		<dd>The string representing the node type</dd>
+		<dt><code>args</code></dt>
+		<dd>The array of arguments</dd>
+	</dl>
+
+	<h2>Methods</h2>
+	<dl>
+		<dt><code>toString()</code></dt>
+		<dd>Returns a string representation of the EquationTree (mostly for debugging)</dd>
+		<dt><code>toLaTeX()</code></dt>
+		<dd>Returns a LaTeX representation of the EquationTree, to be used directly in the HTML document.</dd>
+		<dt><code>hasVariable(varName:string)</code></dt>
+		<dd>Returns whether or not the variable given is anywhere in this tree.</dd>
+		<dt><code>simplify()</code></dt>
+		<dd>Reduce the expression to an equivalent one (that is no more complex than the original expression). This does not include moving expressions from one side of an equation to the other.</dd>
+	</dl>
+
+	<h2>Special Methods</h2>
+	<dl>
+		<dt><code>lhs()</code> and <code>rhs()</code></dt>
+		<dd>For binary operators only: returns the left and right subtrees of these nodes.</dd>
+		<dt><code>solveFor(varName:string)</code></dt>
+		<dd>Reduce an equation to an equivalent one of the form $varName = (\dots)$, where $(\dots)$ has already been simplified according to the <code>simplify()</code> method. Ideally, the $(\dots)$ should not also contain varName, but I think that's not upheld in the current implementation. The EquationTree calling this function should be of nodeType Equation, but if not (or if the equation can't be solved under the current implementation), <code>null</code> is returned (the function should not throw any errors).</dd>
+	</dl>
+</p>
+</body>
+</html>

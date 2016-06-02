@@ -1,0 +1,408 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>EquationTree Testing</title>
+	<script type="text/javascript" async
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			TeX: { extensions: ["color.js"], equationNumbers: { autoNumber: "AMS" } },
+			showMathMenu: false
+		});
+	</script>
+	<script
+		src="https://code.jquery.com/jquery-2.2.2.min.js"
+		integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="
+		crossorigin="anonymous"></script>
+	<script
+		src="EquationTree.js"></script>
+	<style type="text/css">
+		ul	{
+			list-style-type: none;
+		}
+	</style>
+</head>
+<body>
+<h2>Single Expressions</h2>
+<ul id="single_expression"></ul>
+
+<h2>Compound Expressions</h2>
+<ul id="compound_expression"></ul>
+
+<h2>Inner Addition Expressions</h2>
+<ul id="addition_expression"></ul>
+
+<h2>Inner Subtraction Expressions</h2>
+<ul id="subtraction_expression"></ul>
+
+<h2>Inner Multiplication Expressions</h2>
+<ul id="multiplication_expression"></ul>
+
+<h2>Inner Division Expressions</h2>
+<ul id="division_expression"></ul>
+
+<h2>Inner Exponent Expressions</h2>
+<ul id="exponentiation_expression"></ul>
+
+<h2>Complex Expressions</h2>
+<ul id="complex_expression"></ul>
+
+<h2>Solving Equations For Variables</h2>
+<ul id="solving_equation"></ul>
+
+<h2>Simplifying Expressions</h2>
+<ul id="simplify_expressions"></ul>
+
+<script>
+function output(dest, expr){
+	$(dest).append("<li>\\begin{equation}" + expr.toLaTeX(false) + "\\end{equation}</li>");
+}
+
+/** Single Expressions */
+(function(){
+	var num = ConstNumber(-3);         output(single_expression, num);
+	var varb = Variable("a");          output(single_expression, varb);
+	var varb_sub = Variable("a_n");    output(single_expression, varb_sub);
+})();
+
+/** Double Expressions */
+(function(){
+	var num = ConstNumber(-3);
+	var varb = Variable("a");
+
+	expr = Equals(varb, num);     output(compound_expression, expr);
+	expr = Plus(varb, num);       output(compound_expression, expr);
+	expr = Minus(varb, num);      output(compound_expression, expr);
+	expr = Times(varb, num);      output(compound_expression, expr);
+	expr = DividedBy(varb, num);  output(compound_expression, expr);
+})();
+
+/** Inner Plus Expressions */
+(function(){
+	var num = ConstNumber(-3);
+	var num2 = ConstNumber(5.4);
+	var num3 = ConstNumber(77);
+	var varb = Variable("a");
+	var varb_sub = Variable("b_n");
+
+	var plus1 = Plus(num, varb);
+	var plus2 = Plus(num2, varb_sub);
+
+	var expr;
+	//right inner div
+	expr = Equals(num3, plus1);     output(addition_expression, expr);
+	expr = Plus(num3, plus1);       output(addition_expression, expr);
+	expr = Minus(num3, plus1);      output(addition_expression, expr);
+	expr = Times(num3, plus1);      output(addition_expression, expr);
+	expr = DividedBy(num3, plus1);  output(addition_expression, expr);
+	expr = Exponent(num3, plus1);   output(addition_expression, expr);
+
+	//left inner divs
+	expr = Equals(plus2, num3);     output(addition_expression, expr);
+	expr = Plus(plus2, num3);       output(addition_expression, expr);
+	expr = Minus(plus2, num3);      output(addition_expression, expr);
+	expr = Times(plus2, num3);      output(addition_expression, expr);
+	expr = DividedBy(plus2, num3);  output(addition_expression, expr);
+	expr = Exponent(plus2, num3);   output(addition_expression, expr);
+
+	//two inner divs
+	expr = Equals(plus2, plus1);     output(addition_expression, expr);
+	expr = Plus(plus2, plus1);       output(addition_expression, expr);
+	expr = Minus(plus2, plus1);      output(addition_expression, expr);
+	expr = Times(plus2, plus1);      output(addition_expression, expr);
+	expr = DividedBy(plus2, plus1);  output(addition_expression, expr);
+	expr = Exponent(plus2, plus1);   output(addition_expression, expr);
+})();
+
+/** Inner Minus Expressions */
+(function(){
+	var num = ConstNumber(-3);
+	var num2 = ConstNumber(5.4);
+	var num3 = ConstNumber(77);
+	var varb = Variable("a");
+	var varb_sub = Variable("b_n");
+
+	var minus1 = Minus(num, varb);
+	var minus2 = Minus(num2, varb_sub);
+
+	var expr;
+	//right inner div
+	expr = Equals(num3, minus1);     output(subtraction_expression, expr);
+	expr = Plus(num3, minus1);       output(subtraction_expression, expr);
+	expr = Minus(num3, minus1);      output(subtraction_expression, expr);
+	expr = Times(num3, minus1);      output(subtraction_expression, expr);
+	expr = DividedBy(num3, minus1);  output(subtraction_expression, expr);
+
+	//left inner divs
+	expr = Equals(minus2, num3);     output(subtraction_expression, expr);
+	expr = Plus(minus2, num3);       output(subtraction_expression, expr);
+	expr = Minus(minus2, num3);      output(subtraction_expression, expr);
+	expr = Times(minus2, num3);      output(subtraction_expression, expr);
+	expr = DividedBy(minus2, num3);  output(subtraction_expression, expr);
+
+	//two inner divs
+	expr = Equals(minus2, minus1);     output(subtraction_expression, expr);
+	expr = Plus(minus2, minus1);       output(subtraction_expression, expr);
+	expr = Minus(minus2, minus1);      output(subtraction_expression, expr);
+	expr = Times(minus2, minus1);      output(subtraction_expression, expr);
+	expr = DividedBy(minus2, minus1);  output(subtraction_expression, expr);
+})();
+
+
+/** Inner Times Expressions */
+(function(){
+	var num = ConstNumber(-3);
+	var num2 = ConstNumber(5.4);
+	var num3 = ConstNumber(77);
+	var varb = Variable("a");
+	var varb_sub = Variable("b_n");
+
+	var times1 = Times(num, varb);
+	var times2 = Times(num2, varb_sub);
+
+	var expr;
+	//right inner div
+	expr = Equals(num3, times1);     output(multiplication_expression, expr);
+	expr = Plus(num3, times1);       output(multiplication_expression, expr);
+	expr = Minus(num3, times1);      output(multiplication_expression, expr);
+	expr = Times(num3, times1);      output(multiplication_expression, expr);
+	expr = DividedBy(num3, times1);  output(multiplication_expression, expr);
+
+	//left inner divs
+	expr = Equals(times2, num3);     output(multiplication_expression, expr);
+	expr = Plus(times2, num3);       output(multiplication_expression, expr);
+	expr = Minus(times2, num3);      output(multiplication_expression, expr);
+	expr = Times(times2, num3);      output(multiplication_expression, expr);
+	expr = DividedBy(times2, num3);  output(multiplication_expression, expr);
+
+	//two inner divs
+	expr = Equals(times2, times1);     output(multiplication_expression, expr);
+	expr = Plus(times2, times1);       output(multiplication_expression, expr);
+	expr = Minus(times2, times1);      output(multiplication_expression, expr);
+	expr = Times(times2, times1);      output(multiplication_expression, expr);
+	expr = DividedBy(times2, times1);  output(multiplication_expression, expr);
+})();
+
+/** Inner Divided-by Expressions */
+(function(){
+	var num = ConstNumber(-3);
+	var num2 = ConstNumber(5.4);
+	var num3 = ConstNumber(77);
+	var varb = Variable("a");
+	var varb_sub = Variable("b_n");
+
+	var div1 = DividedBy(num, varb);
+	var div2 = DividedBy(num2, varb_sub);
+
+	var expr;
+	//right inner div
+	expr = Equals(num3, div1);     output(division_expression, expr);
+	expr = Plus(num3, div1);       output(division_expression, expr);
+	expr = Minus(num3, div1);      output(division_expression, expr);
+	expr = Times(num3, div1);      output(division_expression, expr);
+	expr = DividedBy(num3, div1);  output(division_expression, expr);
+
+	//left inner divs
+	expr = Equals(div2, num3);     output(division_expression, expr);
+	expr = Plus(div2, num3);       output(division_expression, expr);
+	expr = Minus(div2, num3);      output(division_expression, expr);
+	expr = Times(div2, num3);      output(division_expression, expr);
+	expr = DividedBy(div2, num3);  output(division_expression, expr);
+
+	//two inner divs
+	expr = Equals(div2, div1);     output(division_expression, expr);
+	expr = Plus(div2, div1);       output(division_expression, expr);
+	expr = Minus(div2, div1);      output(division_expression, expr);
+	expr = Times(div2, div1);      output(division_expression, expr);
+	expr = DividedBy(div2, div1);  output(division_expression, expr);
+})();
+
+/** Inner Exponent Expressions */
+(function(){
+	var num = ConstNumber(-3);
+	var num2 = ConstNumber(5.4);
+	var num3 = ConstNumber(77);
+	var varb = Variable("a");
+	var varb_sub = Variable("b_n");
+
+	var exp1 = Exponent(num, varb);
+	var exp2 = Exponent(num2, varb_sub);
+
+	var expr;
+	//right inner div
+	expr = Equals(num3, exp1);     output(exponentiation_expression, expr);
+	expr = Plus(num3, exp1);       output(exponentiation_expression, expr);
+	expr = Minus(num3, exp1);      output(exponentiation_expression, expr);
+	expr = Times(num3, exp1);      output(exponentiation_expression, expr);
+	expr = DividedBy(num3, exp1);  output(exponentiation_expression, expr);
+	expr = Exponent(num3, exp1);   output(exponentiation_expression, expr);
+	expr = Logarithm(num3, exp1);  output(exponentiation_expression, expr);
+
+	//left inner divs
+	expr = Equals(exp2, num3);     output(exponentiation_expression, expr);
+	expr = Plus(exp2, num3);       output(exponentiation_expression, expr);
+	expr = Minus(exp2, num3);      output(exponentiation_expression, expr);
+	expr = Times(exp2, num3);      output(exponentiation_expression, expr);
+	expr = DividedBy(exp2, num3);  output(exponentiation_expression, expr);
+	expr = Exponent(exp2, num3);   output(exponentiation_expression, expr);
+	expr = Logarithm(exp2, num3);  output(exponentiation_expression, expr);
+
+	//two inner divs
+	expr = Equals(exp2, exp1);     output(exponentiation_expression, expr);
+	expr = Plus(exp2, exp1);       output(exponentiation_expression, expr);
+	expr = Minus(exp2, exp1);      output(exponentiation_expression, expr);
+	expr = Times(exp2, exp1);      output(exponentiation_expression, expr);
+	expr = DividedBy(exp2, exp1);  output(exponentiation_expression, expr);
+	expr = Exponent(exp2, exp1);   output(exponentiation_expression, expr);
+	expr = Logarithm(exp2, exp1);  output(exponentiation_expression, expr);
+	expr = Minus(exp2, PM(exp1));  output(exponentiation_expression, expr);
+	expr = Minus(exp2, PlusMinus(exp1, num3));  output(exponentiation_expression, expr);
+})();
+
+/** Complex Expressions */
+(function(){
+	var lhs;
+	var rhs;
+
+	// Kepler's third law
+	lhs = DividedBy(Exponent(Variable("P"), ConstNumber(2)), Exponent(Variable("a"), ConstNumber(3)));
+	rhs = DividedBy(Times(ConstNumber(4), Exponent(Variable("\\pi"), ConstNumber(2))),
+		Times(Variable("G"), Plus(Variable("M"), Variable("m")) ));
+	output(complex_expression, Equals(lhs, rhs));
+
+	// Heron's formula
+	var s = Variable("s");
+	var a = Variable("a");
+	var b = Variable("b");
+	var c = Variable("c");
+	lhs = s;
+	rhs = DividedBy(Plus(a, Plus(b, c) ), ConstNumber(2));
+	output(complex_expression, Equals(lhs, rhs));
+	lhs = Variable("A");
+	rhs = Sqrt(Times(Times(Times(s, Minus(s, a)), Minus(s, b)), Minus(s, c)));
+	output(complex_expression, Equals(lhs, rhs));
+
+	// entropy formula
+	lhs = Variable("S");
+	rhs = Times(Variable("k"), Ln(Variable("W")));
+	output(complex_expression, Equals(lhs, rhs));
+
+	// quadratic formula
+	lhs = Variable("x");
+	var minusB = Negative(b);
+	var discriminant = Sqrt( Minus ( Exponent(b, ConstNumber(2)), Times(ConstNumber(4), Times(a,c)) ) );
+	var denominator = Times( ConstNumber(2), Variable("a") );
+	rhs = DividedBy(PlusMinus(minusB, discriminant), denominator);
+	output(complex_expression, Equals(lhs, rhs));
+
+	$(complex_expression).append("<li>Does minus-b have b? " + minusB.hasVariable("b") + "</li>");
+	$(complex_expression).append("<li>Does minus-b have x? " + minusB.hasVariable("x") + "</li>");
+	$(complex_expression).append("<li>Does the discriminant have a? " + discriminant.hasVariable("a") + "</li>");
+	$(complex_expression).append("<li>Does the discriminant have x? " + discriminant.hasVariable("x") + "</li>");
+	$(complex_expression).append("<li>Does b have b? " + b.hasVariable("b") + "</li>");
+	$(complex_expression).append("<li>Does b have x? "+ b.hasVariable("x") + "</li>");
+	$(complex_expression).append("<li>Does the equation have x? " + Equals(lhs, rhs).hasVariable("b") + "</li>");
+	$(complex_expression).append("<li>Does the equation have x_n? "+ Equals(lhs, rhs).hasVariable("x_n") + "</li>");
+})();
+
+
+/** Solving Equations */
+(function(){
+	var eq;
+
+	eq = Equals(Variable("a"), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+
+	eq = Equals(ConstNumber(6), Variable("a"));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+
+	eq = Equals(Plus( Variable("a"), ConstNumber(18) ), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+
+	eq = Equals(Plus( ConstNumber(18), Variable("a") ), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+
+
+	eq = Equals(Plus(ConstNumber(24), Plus( Variable("a"), ConstNumber(18) )), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+	eq = Equals(Plus(ConstNumber(24), Plus( ConstNumber(18), Variable("a") )), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+	eq = Equals(Plus(ConstNumber(24), Minus( Variable("a"), ConstNumber(18) )), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+	eq = Equals(Plus(ConstNumber(24), Minus( ConstNumber(18), Variable("a") )), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+
+	eq = Equals(Times(ConstNumber(24), Times( Variable("a"), ConstNumber(18) )), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+	eq = Equals(Times(ConstNumber(24), Times( ConstNumber(18), Variable("a") )), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+	eq = Equals(Times(ConstNumber(24), DividedBy( Variable("a"), ConstNumber(18) )), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+	eq = Equals(Times(ConstNumber(24), DividedBy( ConstNumber(18), Variable("a") )), ConstNumber(6));
+	output(solving_equation, eq);
+	output(solving_equation, eq.solveFor("a"));
+
+	var lhs, rhs;
+	lhs = DividedBy(Exponent(Variable("P"), ConstNumber(2)), Exponent(Variable("a"), ConstNumber(3)));
+	rhs = DividedBy(Times(ConstNumber(4), Exponent(Variable("\\pi"), ConstNumber(2))),
+		Times(Variable("G"), Plus(Variable("M"), Variable("m")) ));
+	eq = Equals(lhs, rhs)
+	output(solving_equation, eq);
+	output(solving_equation, eq._solveFor("M"));
+	output(solving_equation, eq._solveFor("a"));
+	output(solving_equation, eq.solveFor("M"));
+	output(solving_equation, eq.solveFor("a"));
+})();
+
+
+/** Simplify Expressions */
+(function(){
+	var expr;
+
+	expr = ConstNumber(3);
+	output(simplify_expressions, expr);
+	output(simplify_expressions, expr.simplify());
+
+	expr = ConstNumber(-4);
+	output(simplify_expressions, expr);
+	output(simplify_expressions, expr.simplify());
+
+	expr = Minus(ConstNumber(2), ConstNumber(3));
+	output(simplify_expressions, expr);
+	output(simplify_expressions, expr.simplify());
+
+	expr = Minus(Variable("u"), ConstNumber(-4));
+	output(simplify_expressions, expr);
+	output(simplify_expressions, expr.simplify());
+
+	expr = DividedBy(Times(ConstNumber(3), ConstNumber(44)), ConstNumber(-4));
+	output(simplify_expressions, expr);
+	output(simplify_expressions, expr.simplify());
+
+	expr = DividedBy(ConstNumber(-1), ConstNumber(-4));
+	output(simplify_expressions, expr);
+	output(simplify_expressions, expr.simplify());
+
+	expr = Times(ConstNumber(3), ConstNumber(-4));
+	output(simplify_expressions, expr);
+	output(simplify_expressions, expr.simplify());
+})();
+
+//TODO: make sure MathJax has already loaded before trying to call it
+MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+
+</script>
+</body>
+</html>
