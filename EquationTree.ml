@@ -5,7 +5,7 @@ type expression =
   (* unary operators *)
   | Negative of expression
   (* binary operators *)
-  | Plus of expression * expression
+  | Plus of expression * expression 
   | Minus of expression * expression
 
 (* the following helper functions take in an expression, but mainly just pattern match
