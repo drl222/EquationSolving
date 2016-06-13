@@ -9,7 +9,7 @@ EquationTree.js: EquationTree.ml EquationTree.mli
 # bucklescript/UnitTest.cma: bucklescript/UnitTest.cmo
 # 	ocamlc -o bucklescript/UnitTest.cma -a bucklescript/UnitTest.cmo
 
-Test: bucklescript/UnitTest.ml EquationTreeTesting.ml
+Test: bucklescript/UnitTest.ml EquationTreeTesting.ml EquationTree.ml
 	ocamlc -o Test -I bucklescript bucklescript/UnitTest.ml EquationTree.mli EquationTree.ml EquationTreeTesting.ml
 
 clean:

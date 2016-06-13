@@ -73,8 +73,7 @@ let rec to_LaTeX_helper parenthesize expr =
     | ( Plus (ex1, ex2) as outer_ex )
     | ( Minus (ex1, ex2) as outer_ex )
       -> "{" ^
-      ( if is_constant ex1 then to_LaTeX_helper false ex1
-        else to_LaTeX_helper true ex1 ) ^
+      ( to_LaTeX_helper false ex1 ) ^ (* lhs of plus and minus never need to be parenthesized *)
       "} " ^
       ( get_binary_operator_symbol outer_ex ) ^
       " {" ^
