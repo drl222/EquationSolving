@@ -1,4 +1,9 @@
 console.log("index.js");
+
+jQuery.htmlPrefilter = function( html ) {
+	return html;
+};
+
 requirejs.config({
 	packages: [
 		{name:'runtime', location:'bucklescript/runtime'},
